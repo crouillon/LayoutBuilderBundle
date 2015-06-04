@@ -1,0 +1,14 @@
+template: Test
+columns:
+  MainColumn:
+    mainZone: true
+    accept: ~
+    maxentry: ~
+    defaultClassContent: Test
+    inherited: false
+  SidePane:
+    mainZone: false
+    accept: ~
+    maxentry: ~
+    defaultClassContent: ~
+    inherited: true

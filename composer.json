@@ -1,0 +1,30 @@
+{
+    "name": "backbee/layout-builder-bundle",
+    "description": "BackBee layout builder bundle",
+    "type": "backbee-bundle",
+    "license": "GPL-3.0+",
+    "keywords": ["backbee", "article", "blog"],
+    "homepage": "https://github.com/backbee/demo-bundle",
+    "authors": [
+        {
+            "name": "Nicolas Dufreche",
+            "email": "nicolas.dufreche@lp-digital.fr"
+        }
+    ],
+    "require": {
+        "backbee/backbee": "1.0.*@dev",
+        "symfony/yaml": "~2.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.4.2"
+    },
+    "autoload": {
+        "psr-4": { "BackBee\\Bundle\\LayoutBuilderBundle\\": "" }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
