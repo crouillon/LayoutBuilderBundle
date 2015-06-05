@@ -45,9 +45,9 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateLayout()
     {
-        $layout = $this->builder->generateLayout($this->site, $this->baseDir.DIRECTORY_SEPARATOR.'Test.yml');
+        $layout = $this->builder->generateLayout($this->baseDir.DIRECTORY_SEPARATOR.'Test.yml', $this->site);
 
-        $this->assertEquals(md5('Test.yml'), $layout->getUid());
+        $this->assertEquals(md5($this->site->getUid().'Test.yml'), $layout->getUid());
 
         $this->assertEquals('Test.twig', $layout->getPath());
         $this->assertTrue(is_string($layout->getData()));
@@ -59,12 +59,11 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('templateLayouts', $decoded);
         $this->assertEquals(2, count($decoded->templateLayouts));
         $this->assertObjectHasAttribute('title', $decoded->templateLayouts[0]);
-
     }
 
     public function testGenerateLayoutAlt()
     {
-        $layout = $this->builder->generateLayout($this->site, $this->baseDir.DIRECTORY_SEPARATOR.'TestAlt.yml');
+        $layout = $this->builder->generateLayout($this->baseDir.DIRECTORY_SEPARATOR.'TestAlt.yml');
 
         $this->assertEquals(md5('TestAlt.yml'), $layout->getUid());
 
@@ -73,20 +72,20 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException BackBee\Bundle\LayoutBuilderBundle\Entity\Exception\LayoutYamlException
+     * @expectedException BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutYamlException
      */
     public function  testGenerateLayoutExceptionInvalidTemplate()
     {
         $erroneousFolder = $this->baseDir.DIRECTORY_SEPARATOR.'Erroneous'.DIRECTORY_SEPARATOR;
-        $this->builder->generateLayout($this->site, $erroneousFolder.'TestException1.yml');
+        $this->builder->generateLayout($erroneousFolder.'TestException1.yml');
     }
 
     /**
-     * @expectedException BackBee\Bundle\LayoutBuilderBundle\Entity\Exception\LayoutYamlException
+     * @expectedException BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutYamlException
      */
     public function  testGenerateLayoutExceptionNoColumnDefinition()
     {
         $erroneousFolder = $this->baseDir.DIRECTORY_SEPARATOR.'Erroneous'.DIRECTORY_SEPARATOR;
-        $this->builder->generateLayout($this->site, $erroneousFolder.'TestException2.yml');
+        $this->builder->generateLayout($erroneousFolder.'TestException2.yml');
     }
 }

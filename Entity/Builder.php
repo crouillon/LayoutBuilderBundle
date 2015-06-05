@@ -1,7 +1,10 @@
 <?php
 namespace BackBee\Bundle\LayoutBuilderBundle\Entity;
 
+use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutYamlException;
+
 use BackBee\Site\Layout;
+use BackBee\Site\Site;
 
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -44,14 +47,18 @@ class Builder
         $this->layoutFolder = $layoutFolder;
     }
 
-    public function generateLayout($site, $filename, $extention = self::EXTENSION)
+    public function generateLayout($filename, Site $site = null, $extention = self::EXTENSION)
     {
         try {
             $data = Yaml::parse($filename);
+            $baseUid = ($site !== null) ? $site->getUid() : '';
 
-            $layout = new Layout(md5(basename($filename)));
-            $layout->setPicPath($layout->getUid().'.png')
-                ->setSite($site);
+            $layout = new Layout(md5($baseUid . basename($filename)));
+            $layout->setPicPath($layout->getUid().'.png');
+
+            if ($site !== null) {
+                $layout->setSite($site);
+            }
 
             if (array_key_exists('label', $data) && $data['label'] !== null) {
                 $layout->setLabel($data['label']);
@@ -66,15 +73,15 @@ class Builder
             if (array_key_exists('columns', $data)) {
                 $layout->setData($this->computeColumns($data['columns']));
             } else {
-                throw new Exception\LayoutYamlException(
+                throw new LayoutYamlException(
                     'Layout '.$layout->getLabel().' definition need columns',
-                    Exception\LayoutYamlException::NO_COLUMN_ERROR
+                    LayoutYamlException::NO_COLUMN_ERROR
                 );
             }
          } catch (ParseException $e) {
-            throw new Exception\LayoutYamlException(
+            throw new LayoutYamlException(
                 $e->getMessage(),
-                Exception\LayoutYamlException::LAYOUT_BUILD_ERROR,
+                LayoutYamlException::LAYOUT_BUILD_ERROR,
                 $e,
                 $e->getParsedFile(),
                 $e->getParsedLine()
@@ -90,9 +97,9 @@ class Builder
             if (strlen(pathinfo($value, PATHINFO_EXTENSION)) !== 0) {
                 $layout->setPath($value);
             } else {
-                throw new Exception\LayoutYamlException(
+                throw new LayoutYamlException(
                     'Invalid template name for '.$layout->getLabel().' layout',
-                    Exception\LayoutYamlException::FILE_EXTENSION_NOT_FOUND
+                    LayoutYamlException::FILE_EXTENSION_NOT_FOUND
                 );
             }
 

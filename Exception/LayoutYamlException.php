@@ -21,22 +21,15 @@
  * @author Charles Rouillon <charles.rouillon@lp-digital.fr>
  */
 
-namespace BackBee\Bundle\LayoutBuilderBundle\Entity\Exception;
+namespace BackBee\Bundle\LayoutBuilderBundle\Exception;
 
 use BackBee\Exception\BBException;
 
 /**
- * Configuration exceptions.
- *
- * Error codes defined are :
- *
- * * UNABLE_TO_PARSE:  the configuration file can not be parse
- * * INVALID_BASE_DIR: the base directory cannot be read
- *
- * @category    BackBee
+ * Yaml exceptions.
  *
  * @copyright   Lp digital system
- * @author      c.rouillon <charles.rouillon@lp-digital.fr>
+ * @author     Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
 class LayoutYamlException extends BBException
 {
