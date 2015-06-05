@@ -49,15 +49,27 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(md5('Test.yml'), $layout->getUid());
 
-        $this->assertEquals($this->baseDir.DIRECTORY_SEPARATOR.'Test.twig', $layout->getPath());
+        $this->assertEquals('Test.twig', $layout->getPath());
         $this->assertTrue(is_string($layout->getData()));
         $this->assertTrue(strlen($layout->getData()) !== 0);
+        $this->assertEquals('Test Layout', $layout->getLabel());
 
         $decoded = json_decode($layout->getData());
 
         $this->assertObjectHasAttribute('templateLayouts', $decoded);
         $this->assertEquals(2, count($decoded->templateLayouts));
         $this->assertObjectHasAttribute('title', $decoded->templateLayouts[0]);
+
+    }
+
+    public function testGenerateLayoutAlt()
+    {
+        $layout = $this->builder->generateLayout($this->site, $this->baseDir.DIRECTORY_SEPARATOR.'TestAlt.yml');
+
+        $this->assertEquals(md5('TestAlt.yml'), $layout->getUid());
+
+        $this->assertNull($layout->getPath());
+        $this->assertEquals('TestAlt', $layout->getLabel());
     }
 
     /**
@@ -65,7 +77,8 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function  testGenerateLayoutExceptionInvalidTemplate()
     {
-        $this->builder->generateLayout($this->site, $this->baseDir.DIRECTORY_SEPARATOR.'TestException1.yml');
+        $erroneousFolder = $this->baseDir.DIRECTORY_SEPARATOR.'Erroneous'.DIRECTORY_SEPARATOR;
+        $this->builder->generateLayout($this->site, $erroneousFolder.'TestException1.yml');
     }
 
     /**
@@ -73,6 +86,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function  testGenerateLayoutExceptionNoColumnDefinition()
     {
-        $this->builder->generateLayout($this->site, $this->baseDir.DIRECTORY_SEPARATOR.'TestException2.yml');
+        $erroneousFolder = $this->baseDir.DIRECTORY_SEPARATOR.'Erroneous'.DIRECTORY_SEPARATOR;
+        $this->builder->generateLayout($this->site, $erroneousFolder.'TestException2.yml');
     }
 }

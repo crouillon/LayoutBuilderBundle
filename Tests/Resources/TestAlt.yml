@@ -1,5 +1,5 @@
-template: Test.twig
-label: Test Layout
+template: ~
+label: ~
 columns:
   MainColumn:
     mainZone: true

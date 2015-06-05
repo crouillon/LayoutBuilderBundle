@@ -50,9 +50,14 @@ class Builder
             $data = Yaml::parse($filename);
 
             $layout = new Layout(md5(basename($filename)));
-            $layout->setLabel(basename($filename, '.'.self::EXTENSION))
-                ->setPicPath($layout->getUid().'.png')
+            $layout->setPicPath($layout->getUid().'.png')
                 ->setSite($site);
+
+            if (array_key_exists('label', $data) && $data['label'] !== null) {
+                $layout->setLabel($data['label']);
+            } else {
+                $layout->setLabel(basename($filename, '.'.self::EXTENSION));
+            }
 
             if (array_key_exists('template', $data)) {
                 $this->computeTemplate($layout, $data['template']);
@@ -83,7 +88,7 @@ class Builder
     {
         if ($value !== null) {
             if (strlen(pathinfo($value, PATHINFO_EXTENSION)) !== 0) {
-                $file = $this->layoutFolder . DIRECTORY_SEPARATOR . $value;
+                $layout->setPath($value);
             } else {
                 throw new Exception\LayoutYamlException(
                     'Invalid template name for '.$layout->getLabel().' layout',
@@ -91,7 +96,6 @@ class Builder
                 );
             }
 
-            $layout->setPath($file);
         }
     }
 
