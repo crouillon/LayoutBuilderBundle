@@ -1,0 +1,9 @@
+bundle:
+    name: LayoutBuilderBundle
+    description: Backbee layout manager based on yaml files
+    author: Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
+    version: 1
+    enable: false
+    config_per_site: false
+
+    definition_folder: Layouts/Definitions

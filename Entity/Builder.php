@@ -40,13 +40,6 @@ class Builder
      */
     const EXTENSION = 'yml';
 
-    private $layoutFolder;
-
-    public function __construct($layoutFolder)
-    {
-        $this->layoutFolder = $layoutFolder;
-    }
-
     public function generateLayout($filename, Site $site = null, $extention = self::EXTENSION)
     {
         try {

@@ -29,7 +29,7 @@ class ColumnParserTest extends \PHPUnit_Framework_TestCase
 {
     private $parser;
 
-    public function __construct()
+    public function setUp()
     {
         $this->parser = new ColumnParser();
     }

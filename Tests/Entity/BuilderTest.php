@@ -36,11 +36,11 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     private $site;
 
-    public function __construct()
+    public function setUp()
     {
         $this->site = new Site();
         $this->baseDir = dirname(__DIR__).DIRECTORY_SEPARATOR.'Resources';
-        $this->builder = new Builder($this->baseDir);
+        $this->builder = new Builder();
     }
 
     public function testGenerateLayout()

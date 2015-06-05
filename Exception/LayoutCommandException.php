@@ -1,5 +1,4 @@
 <?php
-namespace BackBee\Bundle\LayoutBuilderBundle;
 
 /*
  * Copyright (c) 2011-2015 Lp digital system
@@ -18,33 +17,27 @@ namespace BackBee\Bundle\LayoutBuilderBundle;
  *
  * You should have received a copy of the GNU General Public License
  * along with BackBee. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author Charles Rouillon <charles.rouillon@lp-digital.fr>
  */
 
-use BackBee\Bundle\AbstractBundle;
+namespace BackBee\Bundle\LayoutBuilderBundle\Exception;
+
+use BackBee\Exception\BBException;
 
 /**
- * @author Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
+ * Layout commands exceptions.
+ *
+ * @copyright   Lp digital system
+ * @author      Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
-class LayoutBuilder extends AbstractBundle
+class LayoutCommandException extends BBException
 {
     /**
-     * {@inheritdoc}
+     * The configuration file can not be parse.
+     *
+     * @var int
      */
-    public function start()
-    {
+    const LAYOUT_BUILD_ERROR = 4400;
 
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function stop()
-    {
-
-    }
-
-    public function getNamespace()
-    {
-        return 'BackBee\Bundle\LayoutBuilderBundle';
-    }
 }
