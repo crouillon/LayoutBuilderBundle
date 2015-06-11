@@ -101,7 +101,7 @@ EOF
             $this->app->getEntityManager()->flush();
 
 
-            $output->writeln("\nLayout deleted.\n");
+            $output->writeln('Layout deleted.');
         } catch (\Exception $exception) {
             $this->exceptionHandler($output, $exception);
         }

@@ -81,7 +81,7 @@ EOF
 
             if ($layout === null) {
                 $this->buildFromFolder($site);
-                $output->writeln("\nLayouts created.\n");
+                $output->writeln('Layouts created.');
             } else {
                 if ($this->isLayoutExist($layout, $site)) {
                     throw new LayoutCommandException('layout '.$layout.' already exists');
@@ -97,7 +97,7 @@ EOF
                     $layout = $this->buildLayout($layout, $site);
                     $this->persist($layout);
                 }
-                $output->writeln("\nLayout created.\n");
+                $output->writeln('Layout created.');
             }
 
         } catch (\Exception $exception) {

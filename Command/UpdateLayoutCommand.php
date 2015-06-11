@@ -79,7 +79,7 @@ EOF
 
             if ($layoutName === null) {
                 $this->buildFromFolder($site, true);
-                $output->writeln("\nLayouts updated.\n");
+                $output->writeln('Layouts updated.');
             } else {
                  if ($site === null) {
                     $sites = $this->app->getEntityManager()->getRepository('BackBee\Site\Site')->findBy([]);
@@ -93,7 +93,7 @@ EOF
                     $layout = $this->update($layoutName, $layout, $site);
                     $this->persist($layout);
                 }
-                $output->writeln("\nLayout updated.\n");
+                $output->writeln('Layout updated.');
             }
 
         } catch (\Exception $exception) {

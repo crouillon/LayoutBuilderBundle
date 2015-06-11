@@ -157,9 +157,9 @@ class AbstractCommandLayout extends AbstractCommand
             $exception instanceof LayoutCommandException ||
             $exception instanceof LayoutYamlException
         ) {
-            $output->writeln("\n".$exception->getMessage()."\n");
+            $output->writeln($exception->getMessage());
         } else {
-            $output->writeln("\n".'Internal error'."\n");
+            $output->writeln('Internal error.');
         }
     }
 }
