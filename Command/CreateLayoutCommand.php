@@ -87,8 +87,16 @@ EOF
                     throw new LayoutCommandException('layout '.$layout.' already exists');
                 }
 
-                $layout = $this->buildLayout($layout, $site);
-                $this->persist($layout);
+                if ($site === null) {
+                    $sites = $this->app->getEntityManager()->getRepository('BackBee\Site\Site')->findBy([]);
+                    foreach ($sites as $site) {
+                        $layout = $this->buildLayout($layout, $site);
+                        $this->persist($layout);
+                    }
+                } else {
+                    $layout = $this->buildLayout($layout, $site);
+                    $this->persist($layout);
+                }
                 $output->writeln("\nLayout created.\n");
             }
 

@@ -81,9 +81,18 @@ EOF
                 $this->buildFromFolder($site, true);
                 $output->writeln("\nLayouts updated.\n");
             } else {
-                $layout = $this->buildLayout($layoutName, $site);
-                $layout = $this->update($layoutName, $layout, $site);
-                $this->persist($layout);
+                 if ($site === null) {
+                    $sites = $this->app->getEntityManager()->getRepository('BackBee\Site\Site')->findBy([]);
+                    foreach ($sites as $site) {
+                        $layout = $this->buildLayout($layoutName, $site);
+                        $layout = $this->update($layoutName, $layout, $site);
+                        $this->persist($layout);
+                    }
+                } else {
+                    $layout = $this->buildLayout($layoutName, $site);
+                    $layout = $this->update($layoutName, $layout, $site);
+                    $this->persist($layout);
+                }
                 $output->writeln("\nLayout updated.\n");
             }
 
