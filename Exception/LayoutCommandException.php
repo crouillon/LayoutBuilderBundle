@@ -28,7 +28,6 @@ use BackBee\Exception\BBException;
 /**
  * Layout commands exceptions.
  *
- * @copyright   Lp digital system
  * @author      Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
 class LayoutCommandException extends BBException

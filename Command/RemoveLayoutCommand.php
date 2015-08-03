@@ -32,7 +32,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Remove Layout.
  *
- * @copyright   Lp digital system
  * @author      Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
 class RemoveLayoutCommand extends AbstractCommandLayout
