@@ -30,7 +30,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Update Layout.
  *
- * @copyright   Lp digital system
  * @author      Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
 class UpdateLayoutCommand extends AbstractCommandLayout

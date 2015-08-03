@@ -23,16 +23,15 @@
 
 namespace BackBee\Bundle\LayoutBuilderBundle\Command;
 
-use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutCommandException;
-
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutCommandException;
+
 /**
  * Create Layout.
  *
- * @copyright   Lp digital system
  * @author      Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
 class CreateLayoutCommand extends AbstractCommandLayout
@@ -84,18 +83,18 @@ EOF
                 $output->writeln('Layouts created.');
             } else {
                 if ($this->isLayoutExist($layout, $site)) {
-                    throw new LayoutCommandException('layout '.$layout.' already exists');
+                    throw new LayoutCommandException('layout '.$layout.' already exists.');
                 }
 
                 if ($site === null) {
                     $sites = $this->app->getEntityManager()->getRepository('BackBee\Site\Site')->findBy([]);
                     foreach ($sites as $site) {
                         $layout = $this->buildLayout($layout, $site);
-                        $this->persist($layout);
+                        $this->persistAndFlush($layout);
                     }
                 } else {
                     $layout = $this->buildLayout($layout, $site);
-                    $this->persist($layout);
+                    $this->persistAndFlush($layout);
                 }
                 $output->writeln('Layout created.');
             }

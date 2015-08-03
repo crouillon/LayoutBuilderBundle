@@ -28,7 +28,6 @@ use BackBee\Exception\BBException;
 /**
  * Yaml exceptions.
  *
- * @copyright   Lp digital system
  * @author     Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
 class LayoutYamlException extends BBException

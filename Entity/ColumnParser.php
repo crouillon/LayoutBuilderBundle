@@ -1,5 +1,4 @@
 <?php
-namespace BackBee\Bundle\LayoutBuilderBundle\Entity;
 
 /*
  * Copyright (c) 2011-2015 Lp digital system
@@ -18,19 +17,22 @@ namespace BackBee\Bundle\LayoutBuilderBundle\Entity;
  *
  * You should have received a copy of the GNU General Public License
  * along with BackBee. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author Charles Rouillon <charles.rouillon@lp-digital.fr>
  */
+
+namespace BackBee\Bundle\LayoutBuilderBundle\Entity;
 
 /**
  * @author Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
 class ColumnParser
 {
-
     private $columnDecorator;
 
     public function __construct()
     {
-        $this->columnDecorator = new ColumnCompatibiltyDecorator();
+        $this->columnDecorator = new ColumnCompatibilityDecorator();
     }
 
     public function parse($column)

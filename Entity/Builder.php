@@ -1,13 +1,4 @@
 <?php
-namespace BackBee\Bundle\LayoutBuilderBundle\Entity;
-
-use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutYamlException;
-
-use BackBee\Site\Layout;
-use BackBee\Site\Site;
-
-use Symfony\Component\Yaml\Exception\ParseException;
-use Symfony\Component\Yaml\Yaml;
 
 /*
  * Copyright (c) 2011-2015 Lp digital system
@@ -26,7 +17,18 @@ use Symfony\Component\Yaml\Yaml;
  *
  * You should have received a copy of the GNU General Public License
  * along with BackBee. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author Charles Rouillon <charles.rouillon@lp-digital.fr>
  */
+
+namespace BackBee\Bundle\LayoutBuilderBundle\Entity;
+
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
+
+use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutYamlException;
+use BackBee\Site\Layout;
+use BackBee\Site\Site;
 
 /**
  * @author Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
@@ -91,7 +93,7 @@ class Builder
                 $layout->setPath($value);
             } else {
                 throw new LayoutYamlException(
-                    'Invalid template name for '.$layout->getLabel().' layout',
+                    'Invalid template name for '.$layout->getLabel().' layout.',
                     LayoutYamlException::FILE_EXTENSION_NOT_FOUND
                 );
             }

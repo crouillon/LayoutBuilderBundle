@@ -23,18 +23,17 @@
 
 namespace BackBee\Bundle\LayoutBuilderBundle\Command;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 use BackBee\Bundle\LayoutBuilderBundle\Entity\Builder;
 use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutCommandException;
 use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutYamlException;
-
 use BackBee\Console\AbstractCommand;
 use BackBee\Site\Layout;
 
-use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Create Layout.
  *
- * @copyright   Lp digital system
  * @author      Nicolas Dufreche <nicolas.dufreche@lp-digital.fr>
  */
 class AbstractCommandLayout extends AbstractCommand
@@ -51,7 +50,7 @@ class AbstractCommandLayout extends AbstractCommand
 
         $config = $this->app->getContainer()->get('bundle.layoutbuilder.config')->getBundleConfig();
         if (!array_key_exists('definition_folder', $config)) {
-            throw new LayoutCommandException('No definition folder define in LayoutBuilderConfig');
+            throw new LayoutCommandException('No definition folder defined in LayoutBuilderConfig');
         }
         $this->baseDir = $this->app->getBaseRepository().DIRECTORY_SEPARATOR.$config['definition_folder'];
         $this->builder = new Builder();
@@ -98,7 +97,7 @@ class AbstractCommandLayout extends AbstractCommand
                     if ($overide) {
                          $layout = $this->update(basename($file), $layout, $site);
                     }
-                    $this->persist($layout);
+                    $this->persistAndFlush($layout);
                 }
             }
         }
@@ -145,7 +144,7 @@ class AbstractCommandLayout extends AbstractCommand
         return $old;
     }
 
-    public function persist(Layout $layout)
+    public function persistAndFlush(Layout $layout)
     {
         $this->app->getEntityManager()->persist($layout);
         $this->app->getEntityManager()->flush($layout);
