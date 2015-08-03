@@ -1,5 +1,4 @@
 <?php
-namespace BackBee\Bundle\LayoutBuilderBundle\Tests\Entity;
 
 /*
  * Copyright (c) 2011-2015 Lp digital system
@@ -18,7 +17,11 @@ namespace BackBee\Bundle\LayoutBuilderBundle\Tests\Entity;
  *
  * You should have received a copy of the GNU General Public License
  * along with BackBee. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @author Charles Rouillon <charles.rouillon@lp-digital.fr>
  */
+
+namespace BackBee\Bundle\LayoutBuilderBundle\Tests\Entity;
 
 use BackBee\Bundle\LayoutBuilderBundle\Entity\ColumnParser;
 

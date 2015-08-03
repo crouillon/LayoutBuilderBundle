@@ -23,11 +23,11 @@
 
 namespace BackBee\Bundle\LayoutBuilderBundle\Command;
 
-use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutCommandException;
-
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutCommandException;
 
 /**
  * Remove Layout.
@@ -55,12 +55,12 @@ class RemoveLayoutCommand extends AbstractCommandLayout
                 InputOption::VALUE_OPTIONAL,
                 'site label or URI'
             )
-            ->setDescription('Remove existant backbee layout')
+            ->setDescription('Removes existing layout.')
             ->setHelp(<<<EOF
-The <info>%command.name%</info> command remove layout named and for a given site only if this layout is unused
+The <info>%command.name%</info> command remove named layout for a given site <error>only</error> if this layout is unused.
 
 <info>php %command.full_name% --layout=layout-name --site=label|uri</info>
-EOF
+EOF;
             )
         ;
     }
@@ -75,17 +75,13 @@ EOF
         $layoutName = $input->getOption('layout');
         $site = $input->getOption('site');
 
-        if ($layoutName === null) {
-            throw new LayoutCommandException('Layout option is required');
-        }
-
         try {
             $site = $this->getSite($site);
 
             $layout = $this->getLayout($layoutName, $site);
 
             if ($layout === null) {
-                throw new LayoutCommandException($layoutName . ' layout not found');
+                throw new LayoutCommandException($layoutName . ' layout not found.');
             }
 
             $page = $this->app
@@ -94,13 +90,13 @@ EOF
                          ->findOneBy(['_layout' => $layout]);
 
             if ($page !== null) {
-                throw new LayoutCommandException($layoutName . ' layout can not be remove, because is already used');
+                throw new LayoutCommandException($layoutName . ' layout can not be removed, because is already used');
             }
             $this->app->getEntityManager()->remove($layout);
             $this->app->getEntityManager()->flush();
 
 
-            $output->writeln('Layout deleted.');
+            $output->writeln(sprintf('<fg=green>Layout %s deleted</fg=green>', $layoutName));
         } catch (\Exception $exception) {
             $this->exceptionHandler($output, $exception);
         }
