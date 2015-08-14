@@ -97,7 +97,7 @@ class AbstractCommandLayout extends AbstractCommand
                     if ($overide) {
                          $layout = $this->update(basename($file), $layout, $site);
                     }
-                    $this->persistAndFlush($layout);
+                    $this->flush($layout);
                 }
             }
         }
@@ -142,6 +142,14 @@ class AbstractCommandLayout extends AbstractCommand
             ->setPath($layout->getPath());
 
         return $old;
+    }
+
+    public function flush(Layout $layout)
+    {
+        if (null === $this->app->getEntityManager()->find('BackBee\Site\Layout', $layout->getUid())) {
+            $this->app->getEntityManager()->persist($layout);
+        }
+        $this->app->getEntityManager()->flush($layout);
     }
 
     public function persistAndFlush(Layout $layout)

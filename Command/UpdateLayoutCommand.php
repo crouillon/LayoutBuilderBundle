@@ -23,6 +23,8 @@
 
 namespace BackBee\Bundle\LayoutBuilderBundle\Command;
 
+use BackBee\Bundle\LayoutBuilderBundle\Entity\UidGenerator\GeneratorInterface;
+
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -53,6 +55,12 @@ class UpdateLayoutCommand extends AbstractCommandLayout
                 InputOption::VALUE_OPTIONAL,
                 'site label or URI'
             )
+            ->addOption(
+                'generator',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'service id of the uid generator for layout'
+            )
             ->setDescription('Update existant backbee layout')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> command update layout based on layout definition name and for a given site
@@ -73,6 +81,13 @@ EOF
         $layoutName = $input->getOption('layout');
         $site = $input->getOption('site');
 
+        $service = $input->getOption('generator');
+        if ($service instanceof GeneratorInterface) {
+            $this->builder->setUidGenerator($service);
+        } else if (null !== $service && $this->getContainer()->has($service)) {
+            $this->builder->setUidGenerator($this->getContainer()->get($service));
+        }
+
         try {
             $site = $this->getSite($site);
 
@@ -85,12 +100,12 @@ EOF
                     foreach ($sites as $site) {
                         $layout = $this->buildLayout($layoutName, $site);
                         $layout = $this->update($layoutName, $layout, $site);
-                        $this->persist($layout);
+                        $this->flush($layout);
                     }
                 } else {
                     $layout = $this->buildLayout($layoutName, $site);
                     $layout = $this->update($layoutName, $layout, $site);
-                    $this->persist($layout);
+                    $this->flush($layout);
                 }
                 $output->writeln('Layout updated.');
             }

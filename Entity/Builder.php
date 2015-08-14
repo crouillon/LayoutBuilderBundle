@@ -26,6 +26,8 @@ namespace BackBee\Bundle\LayoutBuilderBundle\Entity;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
+use BackBee\Bundle\LayoutBuilderBundle\Entity\UidGenerator\DefaultGenerator;
+use BackBee\Bundle\LayoutBuilderBundle\Entity\UidGenerator\GeneratorInterface;
 use BackBee\Bundle\LayoutBuilderBundle\Exception\LayoutYamlException;
 use BackBee\Site\Layout;
 use BackBee\Site\Site;
@@ -42,13 +44,46 @@ class Builder
      */
     const EXTENSION = 'yml';
 
+    /**
+     * The uid generator to use
+     * @var GeneratorInterface 
+     */
+    private $uidGenerator;
+    
+    /**
+     * Sets the uid generator
+     * 
+     * @param  GeneratorInterface  $uidGenerator    The uid generator to use
+     * 
+     * @return Builder                              Returns the builder
+     */
+    public function setUidGenerator(GeneratorInterface $uidGenerator)
+    {
+        $this->uidGenerator = $uidGenerator;
+        return $this;
+    }
+
+    /**
+     * Gets the uid generator, sets it to default one if not set
+     * 
+     * @return GeneratorInterface
+     */
+    public function getUidGenerator()
+    {
+        if (null === $this->uidGenerator) {
+            $this->setUidGenerator(new DefaultGenerator());
+        }
+
+        return $this->uidGenerator;
+    }
+
     public function generateLayout($filename, Site $site = null, $extention = self::EXTENSION)
     {
         try {
             $data = Yaml::parse($filename);
-            $baseUid = ($site !== null) ? $site->getUid() : '';
+            $uid = $this->getUidGenerator()->generateUid($filename, $data, $site);
 
-            $layout = new Layout(md5($baseUid . basename($filename)));
+            $layout = new Layout($uid);
             $layout->setPicPath($layout->getUid().'.png');
 
             if ($site !== null) {
