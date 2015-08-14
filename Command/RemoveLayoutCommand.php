@@ -60,7 +60,7 @@ class RemoveLayoutCommand extends AbstractCommandLayout
 The <info>%command.name%</info> command remove named layout for a given site <error>only</error> if this layout is unused.
 
 <info>php %command.full_name% --layout=layout-name --site=label|uri</info>
-EOF;
+EOF
             )
         ;
     }
